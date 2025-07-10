@@ -21,11 +21,28 @@ class Maquinaria extends Model
         'ano',
         'precio',
         'descripcion',
-        'disponible' 
+        'disponible',
+        'imagen'
     ];
 
     protected $casts = [
         'disponible' => 'boolean',
         'precio' => 'float',
     ];
+
+    public function subasta()
+    {
+        return $this->hasOne(Subasta::class, 'id_maquinaria');
+    }
+
+    public function proveedores()
+    {
+        return $this->hasMany(MaquinariaProveedor::class, 'id_maquinaria');
+    }
+
+    
+
+    
+
+
 }

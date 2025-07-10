@@ -7,8 +7,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
-
 use App\Http\Controllers\MaquinariaController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\SubcategoriaController;
 
 
 
@@ -50,10 +51,21 @@ Route::prefix('v1')->group(function() {
     Route::delete('maquinaria/{id}', [MaquinariaController::class, 'destroy'])->middleware(['auth:sanctum', 'permission:maquinaria:delete']); 
 
 
-/*  GET, POST, PUT, DELETE, */
-/* Route::apiResource('maquinaria', MaquinariaController::class); */ 
+ // Categorías
+    Route::get('categorias', [CategoriaController::class, 'index'])->middleware(['auth:sanctum', 'permission:categorias:view']);
+    Route::post('categorias', [CategoriaController::class, 'store'])->middleware(['auth:sanctum', 'permission:categorias:create']);
+    Route::put('categorias/{id}', [CategoriaController::class, 'update'])->middleware(['auth:sanctum', 'permission:categorias:edit']);
+    Route::delete('categorias/{id}', [CategoriaController::class, 'destroy'])->middleware(['auth:sanctum', 'permission:categorias:delete']);
+    Route::get('categorias/{id}', [CategoriaController::class, 'show'])->middleware(['auth:sanctum', 'permission:categorias:view']);
 
-
+    // Subcategorías
+    Route::get('subcategorias', [SubcategoriaController::class, 'index'])->middleware(['auth:sanctum', 'permission:subcategorias:view']);
+    Route::post('subcategorias', [SubcategoriaController::class, 'store'])->middleware(['auth:sanctum', 'permission:subcategorias:create']);
+    Route::put('subcategorias/{id}', [SubcategoriaController::class, 'update'])->middleware(['auth:sanctum', 'permission:subcategorias:edit']);
+    Route::delete('subcategorias/{id}', [SubcategoriaController::class, 'destroy'])->middleware(['auth:sanctum', 'permission:subcategorias:delete']);
+    Route::get('subcategorias/{id}', [SubcategoriaController::class, 'show'])->middleware(['auth:sanctum', 'permission:subcategorias:view']);
 });
+
+
 
 

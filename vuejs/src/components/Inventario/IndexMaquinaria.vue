@@ -45,7 +45,7 @@
                                         <th>Modelo</th>
                                         <th>Año</th>
                                         <th>Precio</th>
-                                        <th>Disponible</th>
+                                        <th>Descripción</th>
                                         <th class="text-end">Options</th>
                                     </tr>
                                 </thead>
@@ -59,9 +59,10 @@
                                         <td :class="rowClass(item)">{{ item.modelo }}</td>
                                         <td :class="rowClass(item)">{{ item.ano }}</td>
                                         <td :class="rowClass(item)">{{ item.precio }}</td>
-                                        <td :class="rowClass(item)">
+                                        <td :class="rowClass(item)">{{ item.descripcion }}</td>
+                                        <!--  <td :class="rowClass(item)">
                                             {{ item.disponible ? 'Sí' : 'No' }}
-                                        </td>
+                                        </td> -->
                                         <td :class="rowClass(item)" data-label="Options" class="options">
                                             <div class="d-flex justify-content-end">
                                                 <div class="d-inline-flex">
@@ -115,13 +116,14 @@ import Forbidden from '../Errors/Forbidden.vue'
 import { definedAbilities } from '../../utils/abilities'
 
 /* ------------ STATE ------------ */
-const perPage = 5
+const perPage = 10
+
 const loading = ref(true)
 const items = ref([])
 const disponibleFilter = ref([0, 1])          // 0‑No  1‑Sí
 const searchFilter = ref('')
 const setTimeoutSearch = ref('')
-let paginationData = []
+const paginationData = ref([])
 const radioFilter = ref([])
 const token = ref(localStorage.getItem('auth_token'))
 
@@ -146,11 +148,11 @@ const getMaquinaria = (page = 1, limit = perPage, search = '', disponible = []) 
     axios
         .get('/api/v1/maquinaria', { params: { page, limit, search, disponible } })
         .then(({ data }) => {
-
             loading.value = false
             items.value = data.maquinaria.data
-            paginationData = data.maquinaria
+            paginationData.value = data.maquinaria 
         })
+
         .catch(err => {
             loading.value = false
             console.error(err)
